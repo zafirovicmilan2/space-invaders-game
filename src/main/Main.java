@@ -47,6 +47,7 @@ public class Main extends Application {
         player.setTranslateY(WINDOW_HEIGHT * 0.95);
 
         camera = new Camera(player);
+        background.setPlayer(player);
         player.setCamera(camera);
         camera.getChildren().add(player);
         
@@ -114,6 +115,7 @@ public class Main extends Application {
             player.setShots(shots);
             player.update();
             camera.update();
+            background.update();
             
             time += 1.0 / 60;
         }

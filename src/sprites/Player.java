@@ -101,4 +101,8 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
     public void setCamera(Camera camera) {
         this.camera = camera;
     }
+
+    public Camera getCamera() {
+        return camera;
+    }
 }

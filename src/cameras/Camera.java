@@ -12,6 +12,7 @@ public class Camera extends Sprite {
     private PerspectiveCamera defaultCamera;
     private PerspectiveCamera playerCamera;
     private Scene scene;
+    private boolean playerCameraON = false;
 
     public Camera(Player player) {
 
@@ -27,10 +28,15 @@ public class Camera extends Sprite {
     }
 
     public void changeCamera(boolean playerOrDefault){
+        playerCameraON = playerOrDefault;
         if (playerOrDefault)
             scene.setCamera(playerCamera);
         else
             scene.setCamera(defaultCamera);
+    }
+
+    public boolean isPlayerCameraON(){
+        return playerCameraON;
     }
 
     @Override
