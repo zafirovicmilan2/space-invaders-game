@@ -2,6 +2,8 @@ package sprites;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import cameras.Camera;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,6 +23,9 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
     
     private Rectangle body;
     private Rectangle gun;
+
+    private Camera camera = null;
+
     public Player() {
         body = new Rectangle(0, 0, 50, 20);
         body.setTranslateX(-25);
@@ -65,13 +70,7 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
     
     @Override
     public void update() {
-        if (getTranslateX() + velocity < body.getWidth() / 2 + 5) {
-            setTranslateX(body.getWidth() / 2 + 5);
-        } else if (getTranslateX() + velocity > Main.WINDOW_WIDTH - body.getWidth() / 2 - 5) {
-            setTranslateX(Main.WINDOW_WIDTH - body.getWidth() / 2 - 5);
-        } else {
-            setTranslateX(getTranslateX() + velocity);
-        }
+        setTranslateX(getTranslateX() + velocity);
     }
 
     @Override
@@ -91,10 +90,15 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
         } else if (event.getCode() == KeyCode.SPACE && event.getEventType() == KeyEvent.KEY_PRESSED) {
             makeShot();
         } else if (event.getCode() == KeyCode.DIGIT1 && event.getEventType() == KeyEvent.KEY_PRESSED) {
-            
+            if (camera != null)
+                camera.changeCamera(false);
         } else if (event.getCode() == KeyCode.DIGIT2 && event.getEventType() == KeyEvent.KEY_PRESSED) {
-            
+            if (camera != null)
+                camera.changeCamera(true);
         }
     }
-    
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
 }

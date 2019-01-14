@@ -37,7 +37,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         enemies = new LinkedList<>();
         root = new Group();
-        camera = new Camera();
+
         
         background = new Background(WINDOW_WIDTH, WINDOW_HEIGHT);
         root.getChildren().add(background);
@@ -45,6 +45,9 @@ public class Main extends Application {
         player = new Player();
         player.setTranslateX(WINDOW_WIDTH / 2);
         player.setTranslateY(WINDOW_HEIGHT * 0.95);
+
+        camera = new Camera(player);
+        player.setCamera(camera);
         camera.getChildren().add(player);
         
         for (int i = 0; i < ENEMIES_IN_A_COLUMN; i++) 
@@ -58,6 +61,7 @@ public class Main extends Application {
         
         root.getChildren().add(camera);
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        camera.setScene(scene);
         scene.setOnKeyPressed(player);
         scene.setOnKeyReleased(player);
         
@@ -109,6 +113,7 @@ public class Main extends Application {
             
             player.setShots(shots);
             player.update();
+            camera.update();
             
             time += 1.0 / 60;
         }
