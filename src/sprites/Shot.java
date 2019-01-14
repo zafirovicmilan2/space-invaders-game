@@ -27,6 +27,7 @@ public class Shot extends Sprite {
     public void update() {
         setTranslateY(getTranslateY() + SHOT_VELOCITY);
         // TODO add rotation
+        //setRotate(getRotate() + 10);
     }
 
 }

@@ -8,7 +8,9 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import main.Main;
 
 public class Player extends Sprite implements EventHandler<KeyEvent> {
@@ -27,14 +29,34 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
     private Camera camera = null;
 
     public Player() {
-        body = new Rectangle(0, 0, 50, 20);
+
+        body = new Rectangle(0, 0, 0, 0);
         body.setTranslateX(-25);
         body.setFill(Color.SKYBLUE);
-        gun = new Rectangle(0, 0, 6, 10);
+        gun = new Rectangle(0, 0, 0, 0);
         gun.setTranslateX(-3);
         gun.setTranslateY(-10);
         gun.setFill(Color.SKYBLUE);
         getChildren().addAll(body, gun);
+
+        Ellipse e = new Ellipse(25, 30, 30, 20);
+        Ellipse e1 = new Ellipse(25, 40, 30, 15);
+        Shape s = Shape.subtract(e, e1);
+
+
+        Ellipse e3 = new Ellipse(25, 10, 15, 30);
+        Rectangle r = new Rectangle(0, 20, 40, 40);
+        Shape s1 = Shape.subtract(e3, r);
+
+        Ellipse e4 = new Ellipse(25, 10, 5, 15);
+        Rectangle r1 = new Rectangle(0, 10, 40, 40);
+        Shape s2 = Shape.subtract(e4, r1);
+
+        s2.setFill(Color.BLACK);
+        s1.setFill(Color.SKYBLUE);
+        s.setFill(Color.SKYBLUE);
+
+        getChildren().addAll(s,s1,s2);
     }
     
     private void setVelocity() {
