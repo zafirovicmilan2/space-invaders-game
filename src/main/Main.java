@@ -5,14 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sprites.Background;
-import sprites.Enemy;
-import sprites.Player;
-import sprites.Shot;
+import sprites.*;
 
 public class Main extends Application {
     
@@ -30,8 +26,9 @@ public class Main extends Application {
     private Camera camera;
     
     private Group root;
-    private double time = 0;
     private boolean theEnd = false;
+
+    private Time time;
     
     @Override
     public void start(Stage primaryStage) {
@@ -61,6 +58,9 @@ public class Main extends Application {
             }
         
         root.getChildren().add(camera);
+        time = new Time(player);
+        root.getChildren().add(time);
+
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         camera.setScene(scene);
         scene.setOnKeyPressed(player);
@@ -116,8 +116,8 @@ public class Main extends Application {
             player.update();
             camera.update();
             background.update();
-            
-            time += 1.0 / 60;
+            time.update();
+
         }
     }
     
