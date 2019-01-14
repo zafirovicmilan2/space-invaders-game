@@ -53,7 +53,7 @@ public class Main extends Application {
         
         for (int i = 0; i < ENEMIES_IN_A_COLUMN; i++) 
             for (int j = 0; j < ENEMIES_IN_A_ROW; j++) {
-                Enemy enemy = new Enemy();
+                Enemy enemy = new Enemy((i+j)%2 == 0);
                 enemy.setTranslateX((j+1) * WINDOW_WIDTH / (ENEMIES_IN_A_ROW + 1));
                 enemy.setTranslateY((i+1) * 100);
                 camera.getChildren().add(enemy);
