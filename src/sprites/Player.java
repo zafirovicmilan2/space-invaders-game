@@ -15,13 +15,17 @@ import main.Main;
 
 public class Player extends Sprite implements EventHandler<KeyEvent> {
     
-    private static enum States {LEFT, RIGHT, STALL};
+    private static enum VerticalStates {LEFT, RIGHT, STALL};
+    private static enum HorizontalStates {UP, DOWN, STALL};
     private static final double PLAYER_VELOCITY = 10;
     
     private List<Shot> shots = new LinkedList<>();
     
-    private double velocity = 0;
-    private States state = States.STALL;
+    private double verticalVelocity = 0;
+    private VerticalStates verticalState = VerticalStates.STALL;
+
+    private double horizontalVelocity = 0;
+    private HorizontalStates horizontalState = HorizontalStates.STALL;
     
     private Rectangle body;
     private Rectangle gun;
@@ -59,22 +63,38 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
         getChildren().addAll(s,s1,s2);
     }
     
-    private void setVelocity() {
-        switch (state) {
+    private void setVerticalVelocity() {
+        switch (verticalState) {
             case STALL:
-                velocity = 0;
+                verticalVelocity = 0;
                 break;
             case RIGHT:
-                velocity = PLAYER_VELOCITY;
+                verticalVelocity = PLAYER_VELOCITY;
                 break;
             case LEFT:
-                velocity = - PLAYER_VELOCITY;
+                verticalVelocity = - PLAYER_VELOCITY;
                 break;
             default:
                 break;
         }
     }
-    
+
+    private void setHorizontalVelocity() {
+        switch (horizontalState) {
+            case STALL:
+                horizontalVelocity = 0;
+                break;
+            case UP:
+                horizontalVelocity = - PLAYER_VELOCITY;
+                break;
+            case DOWN:
+                horizontalVelocity = PLAYER_VELOCITY;
+                break;
+            default:
+                break;
+        }
+    }
+
     public List<Shot> getShots() {
         return shots;
     }
@@ -92,25 +112,38 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
     
     @Override
     public void update() {
-        setTranslateX(getTranslateX() + velocity);
+        setTranslateX(getTranslateX() + verticalVelocity);
+        setTranslateY(getTranslateY() + horizontalVelocity);
     }
 
     @Override
     public void handle(KeyEvent event) {
         if (event.getCode() == KeyCode.RIGHT && event.getEventType() == KeyEvent.KEY_PRESSED) {
-            state = States.RIGHT;
-            setVelocity();
+            verticalState = VerticalStates.RIGHT;
+            setVerticalVelocity();
         } else if (event.getCode() == KeyCode.LEFT && event.getEventType() == KeyEvent.KEY_PRESSED) {
-            state = States.LEFT;
-            setVelocity();
+            verticalState = VerticalStates.LEFT;
+            setVerticalVelocity();
         } else if (event.getCode() == KeyCode.RIGHT && event.getEventType() == KeyEvent.KEY_RELEASED) {
-            state = States.STALL;
-            setVelocity();
+            verticalState = VerticalStates.STALL;
+            setVerticalVelocity();
         } else if (event.getCode() == KeyCode.LEFT && event.getEventType() == KeyEvent.KEY_RELEASED) {
-            state = States.STALL;
-            setVelocity();
+            verticalState = VerticalStates.STALL;
+            setVerticalVelocity();
         } else if (event.getCode() == KeyCode.SPACE && event.getEventType() == KeyEvent.KEY_PRESSED) {
             makeShot();
+        }if (event.getCode() == KeyCode.UP && event.getEventType() == KeyEvent.KEY_PRESSED) {
+            horizontalState = HorizontalStates.UP;
+            setHorizontalVelocity();
+        } else if (event.getCode() == KeyCode.DOWN && event.getEventType() == KeyEvent.KEY_PRESSED) {
+            horizontalState = HorizontalStates.DOWN;
+            setHorizontalVelocity();
+        } else if (event.getCode() == KeyCode.UP && event.getEventType() == KeyEvent.KEY_RELEASED) {
+            horizontalState = HorizontalStates.STALL;
+            setHorizontalVelocity();
+        } else if (event.getCode() == KeyCode.DOWN && event.getEventType() == KeyEvent.KEY_RELEASED) {
+            horizontalState = HorizontalStates.STALL;
+            setHorizontalVelocity();
         } else if (event.getCode() == KeyCode.DIGIT1 && event.getEventType() == KeyEvent.KEY_PRESSED) {
             if (camera != null)
                 camera.changeCamera(false);

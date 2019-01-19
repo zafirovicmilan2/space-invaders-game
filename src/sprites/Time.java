@@ -20,11 +20,14 @@ public class Time extends Sprite {
 
     @Override
     public void update() {
-        if (player.getCamera().isPlayerCameraON())
+        if (player.getCamera().isPlayerCameraON()){
             timeLabel.setTranslateX(player.getTranslateX());
-        else
+            timeLabel.setTranslateY(player.getTranslateY() - 8*Main.WINDOW_HEIGHT/10);
+        }
+        else {
             timeLabel.setTranslateX(Main.WINDOW_WIDTH/2);
-
+            timeLabel.setTranslateY(Main.WINDOW_HEIGHT/10);
+        }
         timeLabel.setText("TIME: " + (int)time);
         time += 1.0 / 60;
     }

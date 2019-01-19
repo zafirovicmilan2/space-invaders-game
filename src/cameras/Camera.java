@@ -41,6 +41,7 @@ public class Camera extends Sprite {
 
     @Override
     public void update() {
-        playerCamera.setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH/2);
+        playerCamera.setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH / 2);
+        playerCamera.setTranslateY(player.getTranslateY() - 9*Main.WINDOW_HEIGHT / 10);
     }
 }
