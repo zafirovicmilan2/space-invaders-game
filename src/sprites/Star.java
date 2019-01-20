@@ -8,8 +8,11 @@ public class Star extends Sprite {
     private static final double VELOCITY = 3;
     private static final int CHANGE_DIRECTION_PERIOD = 50;
 
-    private static double getRandom(double lower, double upper){
+    public static double getRandom(double lower, double upper){
         return Math.random() * (upper - lower) + lower;
+    }
+    public static int getRandom(int lower, int upper){
+        return (int)(Math.random() * (upper - lower) + lower);
     }
 
     private Polygon body;
