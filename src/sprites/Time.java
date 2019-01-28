@@ -14,19 +14,19 @@ public class Time extends Sprite {
         this.player = player;
         timeLabel = new Text();
         timeLabel.setStroke(Color.RED);
-        timeLabel.setTranslateY(Main.WINDOW_HEIGHT/10);
         getChildren().add(timeLabel);
+        setTranslateY(Main.WINDOW_HEIGHT/10);
     }
 
     @Override
     public void update() {
         if (player.getCamera().isPlayerCameraON()){
-            timeLabel.setTranslateX(player.getTranslateX());
-            timeLabel.setTranslateY(player.getTranslateY() - 8*Main.WINDOW_HEIGHT/10);
+            setTranslateX(player.getTranslateX());
+            setTranslateY(player.getTranslateY() - 8*Main.WINDOW_HEIGHT/10);
         }
         else {
-            timeLabel.setTranslateX(Main.WINDOW_WIDTH/2);
-            timeLabel.setTranslateY(Main.WINDOW_HEIGHT/10);
+            setTranslateX(Main.WINDOW_WIDTH/2);
+            setTranslateY(Main.WINDOW_HEIGHT/10);
         }
         timeLabel.setText("TIME: " + (int)time);
         time += 1.0 / 60;
