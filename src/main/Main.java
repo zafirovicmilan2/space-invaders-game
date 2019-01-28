@@ -61,7 +61,7 @@ public class Main extends Application {
         time = new Time(player);
         root.getChildren().add(time);
 
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, true);
         camera.setScene(scene);
         scene.setOnKeyPressed(player);
         scene.setOnKeyReleased(player);

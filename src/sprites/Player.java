@@ -26,22 +26,10 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
 
     private double horizontalVelocity = 0;
     private HorizontalStates horizontalState = HorizontalStates.STALL;
-    
-    private Rectangle body;
-    private Rectangle gun;
 
     private Camera camera = null;
 
     public Player() {
-
-        body = new Rectangle(0, 0, 0, 0);
-        body.setTranslateX(-25);
-        body.setFill(Color.SKYBLUE);
-        gun = new Rectangle(0, 0, 0, 0);
-        gun.setTranslateX(-3);
-        gun.setTranslateY(-10);
-        gun.setFill(Color.SKYBLUE);
-        getChildren().addAll(body, gun);
 
         Ellipse e = new Ellipse(25, 30, 30, 20);
         Ellipse e1 = new Ellipse(25, 40, 30, 15);
@@ -105,8 +93,8 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
     
     private void makeShot() {
         Shot shot = new Shot();
-        shot.setTranslateX(getTranslateX());
-        shot.setTranslateY(getTranslateY() - 10);
+        shot.setTranslateX(getTranslateX() + getBoundsInLocal().getWidth()/2 - shot.getBoundsInLocal().getWidth()/2);
+        shot.setTranslateY(getTranslateY() - 20);
         shots.add(shot);
     }
     
