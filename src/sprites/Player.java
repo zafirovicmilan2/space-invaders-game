@@ -5,13 +5,14 @@ import java.util.List;
 
 import cameras.Camera;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import main.Main;
 
 public class Player extends Sprite implements EventHandler<KeyEvent> {
     
@@ -49,6 +50,27 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
         s.setFill(Color.SKYBLUE);
 
         getChildren().addAll(s,s1,s2);
+
+        Rectangle leftTube = new Rectangle(10,20);
+        Rectangle rightTube = new Rectangle(10,20);
+        leftTube.setFill(Color.SKYBLUE);
+        rightTube.setFill(Color.SKYBLUE);
+        double middle = (getBoundsInLocal().getMinX() + getBoundsInLocal().getMaxX())/2;
+        leftTube.setTranslateX(middle - 20);
+        leftTube.setTranslateY(20);
+        rightTube.setTranslateX(middle + 10);
+        rightTube.setTranslateY(20);
+
+        Rectangle leftFlame = new Rectangle(20,20);
+        Rectangle rightFlame = new Rectangle(20,20);
+        leftFlame.setTranslateX(middle - 25);
+        rightFlame.setTranslateX(middle + 5);
+        leftFlame.setTranslateY(40);
+        rightFlame.setTranslateY(40);
+        leftFlame.setFill(new ImagePattern(new Image("flame.png"))); //  TODO move flame.png to new folder (images)
+        rightFlame.setFill(new ImagePattern(new Image("flame.png")));
+
+        getChildren().addAll(leftFlame, rightFlame, leftTube, rightTube);
     }
     
     private void setVerticalVelocity() {
