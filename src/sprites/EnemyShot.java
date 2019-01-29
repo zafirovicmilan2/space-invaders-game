@@ -12,13 +12,12 @@ public class EnemyShot extends Sprite{
 
 
     private double angle;
-    private Polygon body;
     private int directionTimer = Star.getRandom(EnemyShot.CHANGE_DIRECTION_PERIOD_LOWER_BOUND, EnemyShot.CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
     private double velocity = Star.getRandom(EnemyShot.SPEED_LOWER_BOUND, EnemyShot.SPEED_UPPER_BOUND);
 
     public EnemyShot(double x, double y, double angle) {
         this.angle = angle;
-        body = new Polygon();
+        Polygon body = new Polygon();
         body.getPoints().addAll(new Double[]{
                 -5.0, 0.0,
                  5.0, 0.0,

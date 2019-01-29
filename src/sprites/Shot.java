@@ -7,10 +7,8 @@ public class Shot extends Sprite {
 
     private static final double SHOT_VELOCITY = -5;
 
-    private Polygon body;
-
     public Shot() {
-        body = new Polygon();
+        Polygon body = new Polygon();
         body.getPoints().addAll(new Double[]{
                 0.0, -8.0,
                 5.0, -4.0,

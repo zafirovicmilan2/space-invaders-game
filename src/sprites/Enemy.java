@@ -16,29 +16,24 @@ import javafx.util.Duration;
 
 public class Enemy extends Sprite {
 
-    Rectangle body;
-    Ellipse leftEye,rightEye;
-    Circle leftPupil, rightPupil;
-
-    Arc mouth;
     Polygon leftEar,rightEar;
 
     public Enemy(boolean leftOrRight) {
-        body = new Rectangle(0, 0, 50, 40);
+        Rectangle body = new Rectangle(0, 0, 50, 40);
         body.setArcHeight(30);
         body.setArcWidth(30);
 
-        leftEye = new Ellipse(15,15 ,8 ,8 );
+        Ellipse leftEye = new Ellipse(15,15 ,8 ,8 );
         leftEye.setFill(Color.WHITE);
         leftEye.setStroke(Color.BLACK);
-        leftPupil = new Circle(15,15,2);
+        Circle leftPupil = new Circle(15,15,2);
 
-        rightEye = new Ellipse(35,15 ,8 ,8 );
+        Ellipse rightEye = new Ellipse(35,15 ,8 ,8 );
         rightEye.setFill(Color.WHITE);
         rightEye.setStroke(Color.BLACK);
-        rightPupil = new Circle(35,15,2);
+        Circle rightPupil = new Circle(35,15,2);
 
-        mouth = new Arc(25,30,15 ,8 ,180 ,180 );
+        Arc mouth = new Arc(25,30,15 ,8 ,180 ,180 );
 
 
         rightEar = new Polygon(50.0,20.0,90.0,40.0,90.0,0.0);
@@ -54,15 +49,14 @@ public class Enemy extends Sprite {
         body.setFill(Color.YELLOW);
         getChildren().addAll(body,leftEye,rightEye,leftPupil,rightPupil,mouth,leftEar,rightEar);
 
-        startWinking(leftOrRight);  // TODO remove these procedures, and do rotations and
+        if(leftOrRight)
+            startWinking(leftEye);
+        else
+            startWinking(rightEye); // TODO remove these procedures, and do rotations and
         startEarRotation();         // winking from update method(manually)
     }
 
-    private void startWinking(boolean leftOfRight){
-        Ellipse eye;
-        if (leftOfRight) eye = leftEye;
-        else eye = rightEye;
-
+    private void startWinking(Ellipse eye){
         ScaleTransition winking = new ScaleTransition(Duration.millis(1000), eye);
         winking.setFromY(1);
         winking.setToY(0.3);
