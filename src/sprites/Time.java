@@ -15,18 +15,18 @@ public class Time extends Sprite {
         timeLabel = new Text();
         timeLabel.setStroke(Color.RED);
         getChildren().add(timeLabel);
-        setTranslateY(Main.WINDOW_HEIGHT/10);
+        setTranslateY(Main.WINDOW_HEIGHT * 0.1);
     }
 
     @Override
     public void update() {
         if (player.getCamera().isPlayerCameraON()){
             setTranslateX(player.getTranslateX());
-            setTranslateY(player.getTranslateY() - 8*Main.WINDOW_HEIGHT/10);
+            setTranslateY(player.getTranslateY() - Main.WINDOW_HEIGHT * 0.8);
         }
         else {
-            setTranslateX(Main.WINDOW_WIDTH/2);
-            setTranslateY(Main.WINDOW_HEIGHT/10);
+            setTranslateX(Main.WINDOW_WIDTH * 0.5);
+            setTranslateY(Main.WINDOW_HEIGHT *0.1);
         }
         timeLabel.setText("TIME: " + (int)time);
         time += 1.0 / 60;

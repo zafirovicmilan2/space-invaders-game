@@ -116,7 +116,7 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
     
     private void makeShot() {
         Shot shot = new Shot();
-        shot.setTranslateX(getTranslateX() + getBoundsInLocal().getWidth()/2 - shot.getBoundsInLocal().getWidth()/2);
+        shot.setTranslateX(getTranslateX() + getBoundsInLocal().getWidth()*0.5 - shot.getBoundsInLocal().getWidth()*0.5);
         shot.setTranslateY(getTranslateY() - 20);
         shots.add(shot);
     }

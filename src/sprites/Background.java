@@ -28,8 +28,8 @@ public class Background extends Sprite {
     @Override
     public void update() {
         if (player.getCamera().isPlayerCameraON()) {
-            setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH / 2);
-            setTranslateY(player.getTranslateY() - 9*Main.WINDOW_HEIGHT / 10);
+            setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH * 0.5);
+            setTranslateY(player.getTranslateY() - Main.WINDOW_HEIGHT * 0.9);
         }
         else{
             setTranslateX(0);

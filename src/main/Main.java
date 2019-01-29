@@ -45,8 +45,8 @@ public class Main extends Application {
         root.getChildren().add(background);
         
         player = new Player();
-        player.setTranslateX(WINDOW_WIDTH / 2);
-        player.setTranslateY(WINDOW_HEIGHT * 0.95);
+        player.setTranslateX(WINDOW_WIDTH * 0.5);
+        player.setTranslateY(WINDOW_HEIGHT * 0.9);
 
         camera = new Camera(player);
         background.setPlayer(player);
