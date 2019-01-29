@@ -4,6 +4,7 @@ package sprites;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import main.Main;
+import mathematics.Mathematics;
 
 public class EnemyShot extends Sprite{
     private static final double SPEED_LOWER_BOUND = 2;
@@ -13,8 +14,8 @@ public class EnemyShot extends Sprite{
 
 
     private double angle;
-    private int directionTimer = Star.getRandom(EnemyShot.CHANGE_DIRECTION_PERIOD_LOWER_BOUND, EnemyShot.CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
-    private double velocity = Star.getRandom(EnemyShot.SPEED_LOWER_BOUND, EnemyShot.SPEED_UPPER_BOUND);
+    private int directionTimer = Mathematics.getRandom(EnemyShot.CHANGE_DIRECTION_PERIOD_LOWER_BOUND, EnemyShot.CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
+    private double velocity = Mathematics.getRandom(EnemyShot.SPEED_LOWER_BOUND, EnemyShot.SPEED_UPPER_BOUND);
 
     public EnemyShot(double x, double y, double angle) {
         this.angle = angle;
@@ -35,7 +36,7 @@ public class EnemyShot extends Sprite{
     @Override
     public void update() {
         if(--directionTimer == 0){
-            directionTimer = Star.getRandom(EnemyShot.CHANGE_DIRECTION_PERIOD_LOWER_BOUND, EnemyShot.CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
+            directionTimer = Mathematics.getRandom(EnemyShot.CHANGE_DIRECTION_PERIOD_LOWER_BOUND, EnemyShot.CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
             angle = -angle;
         }
         double xMove = Math.sin(Math.toRadians(angle)) * velocity;

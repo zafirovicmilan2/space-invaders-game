@@ -3,6 +3,7 @@ package sprites;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import main.Main;
+import mathematics.Mathematics;
 
 public class Star extends Sprite {
 
@@ -13,16 +14,9 @@ public class Star extends Sprite {
     private static final double SCALE_VALUE_LOWER_BOUND = 0.5;
     private static final double SCALE_VALUE_UPPER_BOUND = 2.0;
 
-    public static double getRandom(double lower, double upper){ // TODO replace to other class
-        return Math.random() * (upper - lower) + lower;
-    }
-    public static int getRandom(int lower, int upper){
-        return (int)(Math.random() * (upper - lower) + lower);
-    }
-
-    private double horizontalVelocity = getRandom(-Star.VELOCITY, Star.VELOCITY);
-    private double verticalVelocity = getRandom(-Star.VELOCITY, Star.VELOCITY);
-    private double rotationAngle = getRandom(-Star.ROTATION_ANGLE, Star.ROTATION_ANGLE);
+    private double horizontalVelocity = Mathematics.getRandom(-Star.VELOCITY, Star.VELOCITY);
+    private double verticalVelocity = Mathematics.getRandom(-Star.VELOCITY, Star.VELOCITY);
+    private double rotationAngle = Mathematics.getRandom(-Star.ROTATION_ANGLE, Star.ROTATION_ANGLE);
     private int directionTimer = CHANGE_DIRECTION_PERIOD;
 
     public Star(double x, double y) {
@@ -42,7 +36,7 @@ public class Star extends Sprite {
         this.getChildren().add(body);
         setTranslateX(x);
         setTranslateY(y);
-        double scaleValue = getRandom(SCALE_VALUE_LOWER_BOUND, SCALE_VALUE_UPPER_BOUND);
+        double scaleValue = Mathematics.getRandom(SCALE_VALUE_LOWER_BOUND, SCALE_VALUE_UPPER_BOUND);
         setScaleX(scaleValue);
         setScaleY(scaleValue);
     }
@@ -54,9 +48,9 @@ public class Star extends Sprite {
         setTranslateY(getTranslateY() + verticalVelocity);
         if(--directionTimer == 0){
             directionTimer = CHANGE_DIRECTION_PERIOD;
-            horizontalVelocity = getRandom(-Star.VELOCITY, Star.VELOCITY);
-            verticalVelocity = getRandom(-Star.VELOCITY, Star.VELOCITY);
-            rotationAngle = getRandom(-Star.ROTATION_ANGLE, Star.ROTATION_ANGLE);
+            horizontalVelocity = Mathematics.getRandom(-Star.VELOCITY, Star.VELOCITY);
+            verticalVelocity = Mathematics.getRandom(-Star.VELOCITY, Star.VELOCITY);
+            rotationAngle = Mathematics.getRandom(-Star.ROTATION_ANGLE, Star.ROTATION_ANGLE);
         }
     }
 
