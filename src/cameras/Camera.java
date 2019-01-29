@@ -40,7 +40,7 @@ public class Camera extends Group {
     }
 
     public void update() {
-        playerCamera.setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH / 2);
-        playerCamera.setTranslateY(player.getTranslateY() - 9*Main.WINDOW_HEIGHT / 10);
+        playerCamera.setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH * 0.5);
+        playerCamera.setTranslateY(player.getTranslateY() - Main.WINDOW_HEIGHT * 0.9);
     }
 }
