@@ -1,10 +1,14 @@
 package main;
 
 import cameras.Camera;
+
 import java.util.LinkedList;
 import java.util.List;
+
+import geometry.Geometry;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,6 +22,8 @@ public class Main extends Application {
     public static final int ENEMIES_IN_A_ROW = 6;
     public static final int ENEMIES_IN_A_COLUMN = 3;
 
+    public static final int SIMULTANEOUS_STARS_NUM = 3;
+
     public static final int Z_LEVEL_1 = -1; // used for background
     public static final int Z_LEVEL_2 = -2; // used for stars
     public static final int Z_LEVEL_3 = -3; // used for player, shot, enemy, enemy-shot, coin
@@ -27,6 +33,7 @@ public class Main extends Application {
     private Player player;
     private List<Enemy> enemies;
     private List<Shot> shots;
+    private List<Star> stars;
     
     private Camera camera;
     
@@ -38,6 +45,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         enemies = new LinkedList<>();
+        stars = new LinkedList<>();
         root = new Group();
 
         
@@ -61,6 +69,13 @@ public class Main extends Application {
                 camera.getChildren().add(enemy);
                 enemies.add(enemy);
             }
+
+        for (int i = 0; i < SIMULTANEOUS_STARS_NUM; i++) {
+            Point2D randomPosition = Geometry.getRandomPoint(background.getBoundsInParent());
+            Star star = new Star(randomPosition.getX(), randomPosition.getY());
+            camera.getChildren().add(star);
+            stars.add(star);
+        }
         
         root.getChildren().add(camera);
         time = new Time(player);
@@ -105,10 +120,26 @@ public class Main extends Application {
                     }
                 }
             }
+
+            int currentStarsNum = 0;
+            for (int i = 0; i < stars.size(); i++) {
+                if(Geometry.containsXY(background.getBoundsInParent(), stars.get(i).getBoundsInParent())){
+                    ++currentStarsNum;
+                }
+                // TODO remove stars that are far away from player
+            }
+
+            for (int i = 0; i < SIMULTANEOUS_STARS_NUM - currentStarsNum; i++) {
+                Point2D randomPosition = Geometry.getRandomPoint(background.getBoundsInParent());
+                Star star = new Star(randomPosition.getX(), randomPosition.getY());
+                stars.add(star);
+            }
             
             camera.getChildren().clear();
             camera.getChildren().add(player);
-            
+            camera.getChildren().addAll(stars);
+            stars.forEach(e -> e.update());
+
             if (enemies.isEmpty()) {
                 theEnd = true;
             } else {    
