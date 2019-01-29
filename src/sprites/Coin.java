@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import main.Main;
 
 public class Coin extends Sprite {
 
@@ -41,5 +42,10 @@ public class Coin extends Sprite {
             setTranslateX(getTranslateX() + xMove);
             setTranslateY(getTranslateY() + yMove);
         }
+    }
+
+    @Override
+    public double getZLevel() {
+        return Main.Z_LEVEL_3;
     }
 }

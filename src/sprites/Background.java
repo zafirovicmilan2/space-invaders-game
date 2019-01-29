@@ -37,4 +37,9 @@ public class Background extends Sprite {
         }
 
     }
+
+    @Override
+    public double getZLevel() {
+        return Main.Z_LEVEL_1;
+    }
 }

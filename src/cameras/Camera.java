@@ -1,12 +1,12 @@
 package cameras;
 
+import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import main.Main;
 import sprites.Player;
-import sprites.Sprite;
 
-public class Camera extends Sprite {
+public class Camera extends Group {
 
     private Player player;
     private PerspectiveCamera defaultCamera;
@@ -39,7 +39,6 @@ public class Camera extends Sprite {
         return playerCameraON;
     }
 
-    @Override
     public void update() {
         playerCamera.setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH / 2);
         playerCamera.setTranslateY(player.getTranslateY() - 9*Main.WINDOW_HEIGHT / 10);

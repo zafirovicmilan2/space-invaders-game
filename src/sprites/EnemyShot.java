@@ -3,6 +3,7 @@ package sprites;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import main.Main;
 
 public class EnemyShot extends Sprite{
     private static final double SPEED_LOWER_BOUND = 2;
@@ -41,5 +42,10 @@ public class EnemyShot extends Sprite{
         double yMove = Math.cos(Math.toRadians(angle)) * velocity;
         setTranslateX(getTranslateX() + xMove);
         setTranslateY(getTranslateY() + yMove);
+    }
+
+    @Override
+    public double getZLevel() {
+        return Main.Z_LEVEL_3;
     }
 }

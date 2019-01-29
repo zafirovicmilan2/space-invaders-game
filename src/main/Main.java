@@ -17,6 +17,11 @@ public class Main extends Application {
     
     public static final int ENEMIES_IN_A_ROW = 6;
     public static final int ENEMIES_IN_A_COLUMN = 3;
+
+    public static final int Z_LEVEL_1 = -1; // used for background
+    public static final int Z_LEVEL_2 = -2; // used for stars
+    public static final int Z_LEVEL_3 = -3; // used for player, shot, enemy, enemy-shot, coin
+    public static final int Z_LEVEL_4 = -4; // used for time and result
     
     private Background background;
     private Player player;

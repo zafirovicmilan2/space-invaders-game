@@ -13,6 +13,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
+import main.Main;
 
 public class Enemy extends Sprite {
 
@@ -102,6 +103,11 @@ public class Enemy extends Sprite {
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public double getZLevel() {
+        return Main.Z_LEVEL_3;
     }
 
 }

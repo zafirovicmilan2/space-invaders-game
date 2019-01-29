@@ -2,6 +2,7 @@ package sprites;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import main.Main;
 
 public class Star extends Sprite {
 
@@ -48,5 +49,10 @@ public class Star extends Sprite {
             horizontalVelocity = getRandom(-Star.VELOCITY, Star.VELOCITY);
             verticalVelocity = getRandom(-Star.VELOCITY, Star.VELOCITY);
         }
+    }
+
+    @Override
+    public double getZLevel() {
+        return Main.Z_LEVEL_2;
     }
 }

@@ -31,4 +31,9 @@ public class Time extends Sprite {
         timeLabel.setText("TIME: " + (int)time);
         time += 1.0 / 60;
     }
+
+    @Override
+    public double getZLevel() {
+        return Main.Z_LEVEL_4;
+    }
 }

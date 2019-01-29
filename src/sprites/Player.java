@@ -13,6 +13,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import main.Main;
 
 public class Player extends Sprite implements EventHandler<KeyEvent> {
     
@@ -169,5 +170,10 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
 
     public Camera getCamera() {
         return camera;
+    }
+
+    @Override
+    public double getZLevel() {
+        return Main.Z_LEVEL_3;
     }
 }

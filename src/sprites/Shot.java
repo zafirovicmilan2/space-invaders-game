@@ -2,6 +2,7 @@ package sprites;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import main.Main;
 
 public class Shot extends Sprite {
 
@@ -27,4 +28,8 @@ public class Shot extends Sprite {
         setRotate(getRotate() + 10);
     }
 
+    @Override
+    public double getZLevel() {
+        return Main.Z_LEVEL_3;
+    }
 }
