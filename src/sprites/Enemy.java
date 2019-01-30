@@ -121,11 +121,12 @@ public class Enemy extends Shooter {
     }
 
     @Override
-    public void makeShot() {
+    public EnemyShot makeShot() {
         EnemyShot shot = new EnemyShot();
         shot.setTranslateX(getTranslateX() + getBoundsInLocal().getWidth()*0.5 - shot.getBoundsInLocal().getWidth()*0.5);
         shot.setTranslateY(getTranslateY() + getBoundsInLocal().getHeight());
         shots.add(shot);
+        return shot;
     }
 
     public Main.EnemyStates getState() {

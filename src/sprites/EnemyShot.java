@@ -21,9 +21,9 @@ public class EnemyShot extends Shot{
         this.angle = angle;
         Polygon body = new Polygon();
         body.getPoints().addAll(new Double[]{
-                -5.0, 0.0,
-                 5.0, 0.0,
-                 0.0, 10.0
+                -7.0, 0.0,
+                 7.0, 0.0,
+                 0.0, 14.0
         });
         body.setFill(Color.PINK);
         getChildren().add(body);

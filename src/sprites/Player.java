@@ -105,11 +105,12 @@ public class Player extends Shooter implements EventHandler<KeyEvent> {
     }
 
     @Override
-    public void makeShot() {
+    public PlayerShot makeShot() {
         PlayerShot shot = new PlayerShot();
         shot.setTranslateX(getTranslateX() + getBoundsInLocal().getWidth()*0.5 - shot.getBoundsInLocal().getWidth()*0.5);
         shot.setTranslateY(getTranslateY() - 20);
         shots.add(shot);
+        return shot;
     }
     
     @Override

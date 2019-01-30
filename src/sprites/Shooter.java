@@ -15,5 +15,5 @@ public abstract class Shooter extends Sprite {
         shots = s;
     }
 
-    public abstract void makeShot();
+    public abstract Shot makeShot();
 }

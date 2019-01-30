@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import mathematics.Mathematics;
 import mathematics.RandomTrigger;
 import sprites.*;
 
@@ -31,6 +32,9 @@ public class Main extends Application {
 
     public static final int ENEMY_CHANGE_DIRECTION_PERIOD_LOWER_BOUND = 10;
     public static final int ENEMY_CHANGE_DIRECTION_PERIOD_UPPER_BOUND = 70;
+
+    public static final int ENEMY_SHOOTING_PERIOD_LOWER_BOUND = 10;
+    public static final int ENEMY_SHOOTING_PERIOD_UPPER_BOUND = 100;
 
     public static final int SIMULTANEOUS_STARS_NUM = 3;
 
@@ -50,6 +54,7 @@ public class Main extends Application {
     private Player player;
     private List<Enemy> enemies;
     private List<Shot> playerShots;
+    private List<Shot> enemyShots;
     private List<Star> stars;
     private List<Coin> coins;
     
@@ -63,11 +68,14 @@ public class Main extends Application {
 
     private double enemyVelocity = ENEMY_VELOCITY;
 
-    RandomTrigger enemyChangeDirectionTrigger;
+    private RandomTrigger enemyChangeDirectionTrigger;
+    private RandomTrigger enemyShootingTrigger;
 
     @Override
     public void start(Stage primaryStage) {
+        enemyShots = new LinkedList<>();
         enemyChangeDirectionTrigger = new RandomTrigger(ENEMY_CHANGE_DIRECTION_PERIOD_LOWER_BOUND, ENEMY_CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
+        enemyShootingTrigger = new RandomTrigger(ENEMY_SHOOTING_PERIOD_LOWER_BOUND, ENEMY_SHOOTING_PERIOD_UPPER_BOUND);
 
         enemies = new LinkedList<>();
         stars = new LinkedList<>();
@@ -167,6 +175,20 @@ public class Main extends Application {
                 }
             }
 
+            if (enemyShootingTrigger.isTriggered()) {
+                boolean shot_fired = false;
+                while(!shot_fired){
+                    int index = Mathematics.getRandom(0, enemies.size());
+                    if (enemies.get(index).getState() == EnemyStates.LIVE){
+                        shot_fired = true;
+                        Shot enemyShot = enemies.get(index).makeShot();
+                        camera.getChildren().add(enemyShot);
+                        enemyShots.add(enemyShot);
+                    }
+                }
+            }
+
+
             int currentStarsNum = 0;
             for (int i = 0; i < stars.size(); i++) {
                 if(Geometry.containsXY(background.getBoundsInParent(), stars.get(i).getBoundsInParent())){
@@ -187,6 +209,7 @@ public class Main extends Application {
                     coins.remove(currentCoin);
                     result.addPoints(currentCoin.getValue());
                 }
+                // TODO remove coins that are far away from player
             }
             
             camera.getChildren().clear();
@@ -203,6 +226,7 @@ public class Main extends Application {
             time.update();
             result.update();
             enemyChangeDirectionTrigger.update();
+            enemyShootingTrigger.update();
 
             if (enemies.isEmpty()) {
                 theEnd = true;
@@ -212,6 +236,8 @@ public class Main extends Application {
                 playerShots.forEach(e -> e.update());
                 camera.getChildren().addAll(enemies);
                 enemies.forEach(e -> e.update());
+                camera.getChildren().addAll(enemyShots);
+                enemyShots.forEach(e -> e.update());
             }
         }
     }
