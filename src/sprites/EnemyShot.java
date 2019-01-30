@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import main.Main;
 import mathematics.Mathematics;
+import mathematics.RandomTrigger;
 
 public class EnemyShot extends Shot{
     private static final double SPEED_LOWER_BOUND = 2;
@@ -14,7 +15,7 @@ public class EnemyShot extends Shot{
 
 
     private double angle;
-    private int directionTimer = Mathematics.getRandom(EnemyShot.CHANGE_DIRECTION_PERIOD_LOWER_BOUND, EnemyShot.CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
+    private RandomTrigger trigger = new RandomTrigger(EnemyShot.CHANGE_DIRECTION_PERIOD_LOWER_BOUND, EnemyShot.CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
     private double velocity = Mathematics.getRandom(EnemyShot.SPEED_LOWER_BOUND, EnemyShot.SPEED_UPPER_BOUND);
 
     public EnemyShot(double angle) {
@@ -35,14 +36,11 @@ public class EnemyShot extends Shot{
 
     @Override
     public void update() {
-        if(--directionTimer == 0){
-            directionTimer = Mathematics.getRandom(EnemyShot.CHANGE_DIRECTION_PERIOD_LOWER_BOUND, EnemyShot.CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
+        if(trigger.isTriggered())
             angle = -angle;
-        }
-        double xMove = Math.sin(Math.toRadians(angle)) * velocity;
-        double yMove = Math.cos(Math.toRadians(angle)) * velocity;
-        setTranslateX(getTranslateX() + xMove);
-        setTranslateY(getTranslateY() + yMove);
+        setTranslateX(getTranslateX() + Math.sin(Math.toRadians(angle)) * velocity);
+        setTranslateY(getTranslateY() + Math.cos(Math.toRadians(angle)) * velocity);
+        trigger.update();
     }
 
     @Override
