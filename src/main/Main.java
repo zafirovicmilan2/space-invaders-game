@@ -43,7 +43,8 @@ public class Main extends Application {
     private boolean theEnd = false;
 
     private Time time;
-    
+    private Result result;
+
     @Override
     public void start(Stage primaryStage) {
         enemies = new LinkedList<>();
@@ -81,7 +82,8 @@ public class Main extends Application {
         
         root.getChildren().add(camera);
         time = new Time(player);
-        root.getChildren().add(time);
+        result = new Result(player);
+        root.getChildren().addAll(time, result);
 
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, true);
         camera.setScene(scene);
@@ -164,6 +166,7 @@ public class Main extends Application {
             camera.update();
             background.update();
             time.update();
+            result.update();
 
         }
     }
