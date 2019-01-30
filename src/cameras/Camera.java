@@ -10,7 +10,6 @@ import sprites.Updatable;
 public class Camera extends Group implements Updatable {
 
     private Player player;
-    private PerspectiveCamera defaultCamera;
     private PerspectiveCamera playerCamera;
     private Scene scene;
     private boolean playerCameraON = false;
@@ -18,22 +17,17 @@ public class Camera extends Group implements Updatable {
     public Camera(Player player) {
 
         this.player = player;
-        defaultCamera = new PerspectiveCamera();
         playerCamera = new PerspectiveCamera();
         getTransforms().clear();
     }
 
     public void setScene(Scene scene){
         this.scene = scene;
-        scene.setCamera(defaultCamera);
+        scene.setCamera(playerCamera);
     }
 
     public void changeCamera(boolean playerOrDefault){
         playerCameraON = playerOrDefault;
-        if (playerOrDefault)
-            scene.setCamera(playerCamera);
-        else
-            scene.setCamera(defaultCamera);
     }
 
     public boolean isPlayerCameraON(){
@@ -42,7 +36,13 @@ public class Camera extends Group implements Updatable {
 
     @Override
     public void update() {
-        playerCamera.setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH * 0.5);
-        playerCamera.setTranslateY(player.getTranslateY() - Main.WINDOW_HEIGHT * 0.9);
+        if (isPlayerCameraON()){
+            playerCamera.setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH * 0.5);
+            playerCamera.setTranslateY(player.getTranslateY() - Main.WINDOW_HEIGHT * 0.9);
+        }else {
+            playerCamera.setTranslateX(0);
+            playerCamera.setTranslateY(0);
+        }
+
     }
 }
