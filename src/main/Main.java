@@ -35,6 +35,8 @@ public class Main extends Application {
 
     public static final double FINAL_RESULT_FONT = 100;
 
+    public static final int POINTS_COIN = 5;
+
     public enum EnemyStates {LIVE, SHOT, DEAD};
     
     private Background background;
@@ -42,6 +44,7 @@ public class Main extends Application {
     private List<Enemy> enemies;
     private List<Shot> playerShots;
     private List<Star> stars;
+    private List<Coin> coins;
     
     private Camera camera;
     
@@ -55,6 +58,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         enemies = new LinkedList<>();
         stars = new LinkedList<>();
+        coins = new LinkedList<>();
         root = new Group();
 
         
@@ -134,9 +138,14 @@ public class Main extends Application {
 
             for (int i = 0; i < enemies.size(); i++) {
                 Enemy currentEnemy = enemies.get(i);
-                if (currentEnemy.getState() == EnemyStates.DEAD)
+                if (currentEnemy.getState() == EnemyStates.DEAD) {
                     enemies.remove(currentEnemy);
-                // TODO create a coin
+                    Coin coin = new Coin(POINTS_COIN);
+                    coin.setTranslateX(currentEnemy.getBoundsInParent().getMinX() + currentEnemy.getBoundsInLocal().getWidth() * 0.5);
+                    coin.setTranslateY(currentEnemy.getBoundsInParent().getMaxY() - currentEnemy.getBoundsInLocal().getHeight() * 0.5);
+                    camera.getChildren().add(coin);
+                    coins.add(coin);
+                }
             }
 
             int currentStarsNum = 0;
@@ -152,11 +161,21 @@ public class Main extends Application {
                 Star star = new Star(randomPosition.getX(), randomPosition.getY());
                 stars.add(star);
             }
+
+            for (int i = 0; i < coins.size(); i++) {
+                Coin currentCoin = coins.get(i);
+                if(currentCoin.getBoundsInParent().intersects(player.getBoundsInParent())){
+                    coins.remove(currentCoin);
+                    result.addPoints(currentCoin.getValue());
+                }
+            }
             
             camera.getChildren().clear();
             camera.getChildren().add(player);
             camera.getChildren().addAll(stars);
             stars.forEach(e -> e.update());
+            camera.getChildren().addAll(coins);
+            coins.forEach(e -> e.update());
 
             if (enemies.isEmpty()) {
                 theEnd = true;
