@@ -6,7 +6,7 @@ import javafx.scene.shape.Polygon;
 import main.Main;
 import mathematics.Mathematics;
 
-public class EnemyShot extends Sprite{
+public class EnemyShot extends Shot{
     private static final double SPEED_LOWER_BOUND = 2;
     private static final double SPEED_UPPER_BOUND = 7;
     private static final int CHANGE_DIRECTION_PERIOD_LOWER_BOUND = 20;
@@ -17,7 +17,7 @@ public class EnemyShot extends Sprite{
     private int directionTimer = Mathematics.getRandom(EnemyShot.CHANGE_DIRECTION_PERIOD_LOWER_BOUND, EnemyShot.CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
     private double velocity = Mathematics.getRandom(EnemyShot.SPEED_LOWER_BOUND, EnemyShot.SPEED_UPPER_BOUND);
 
-    public EnemyShot(double x, double y, double angle) {
+    public EnemyShot(double angle) {
         this.angle = angle;
         Polygon body = new Polygon();
         body.getPoints().addAll(new Double[]{
@@ -29,8 +29,8 @@ public class EnemyShot extends Sprite{
         getChildren().add(body);
     }
 
-    public EnemyShot(double x, double y){
-        this(x, y, 30);
+    public EnemyShot(){
+        this(30);
     }
 
     @Override

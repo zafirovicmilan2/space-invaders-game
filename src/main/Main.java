@@ -32,7 +32,7 @@ public class Main extends Application {
     private Background background;
     private Player player;
     private List<Enemy> enemies;
-    private List<Shot> shots;
+    private List<Shot> playerShots;
     private List<Star> stars;
     
     private Camera camera;
@@ -101,20 +101,20 @@ public class Main extends Application {
 
     public void update() {
         if (theEnd == false) {
-            shots = player.getShots();
+            playerShots = player.getShots();
             
-            for (int i = 0; i < shots.size(); i++) {
-                Shot currentShot = shots.get(i);
+            for (int i = 0; i < playerShots.size(); i++) {
+                Shot currentPlayerShot = playerShots.get(i);
                 
-                if (currentShot.getTranslateY() < 50) {
-                    shots.remove(currentShot);
+                if (currentPlayerShot.getTranslateY() < 50) {
+                    playerShots.remove(currentPlayerShot);
                     continue;
                 }
                 
                 for (int j = 0; j < enemies.size(); j++) {
                     Enemy currentEnemy = enemies.get(j);
-                    if (currentShot.getBoundsInParent().intersects(currentEnemy.getBoundsInParent())) {
-                        shots.remove(currentShot);
+                    if (currentPlayerShot.getBoundsInParent().intersects(currentEnemy.getBoundsInParent())) {
+                        playerShots.remove(currentPlayerShot);
                         enemies.remove(currentEnemy);
                         break;
                     }
@@ -143,12 +143,12 @@ public class Main extends Application {
             if (enemies.isEmpty()) {
                 theEnd = true;
             } else {    
-                camera.getChildren().addAll(shots);
-                shots.forEach(e -> e.update());
+                camera.getChildren().addAll(playerShots);
+                playerShots.forEach(e -> e.update());
                 camera.getChildren().addAll(enemies);
             }
             
-            player.setShots(shots);
+            player.setShots(playerShots);
             player.update();
             camera.update();
             background.update();

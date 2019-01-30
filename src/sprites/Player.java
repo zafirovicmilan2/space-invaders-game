@@ -15,13 +15,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import main.Main;
 
-public class Player extends Sprite implements EventHandler<KeyEvent> {
+public class Player extends Shooter implements EventHandler<KeyEvent> {
     
     private static enum VerticalStates {LEFT, RIGHT, STALL};
     private static enum HorizontalStates {UP, DOWN, STALL};
     private static final double PLAYER_VELOCITY = 10;
-    
-    private List<Shot> shots = new LinkedList<>();
     
     private double verticalVelocity = 0;
     private VerticalStates verticalState = VerticalStates.STALL;
@@ -106,16 +104,9 @@ public class Player extends Sprite implements EventHandler<KeyEvent> {
         }
     }
 
-    public List<Shot> getShots() {
-        return shots;
-    }
-    
-    public void setShots(List<Shot> s) {
-        shots = s;
-    }
-    
-    private void makeShot() {
-        Shot shot = new Shot();
+    @Override
+    public void makeShot() {
+        PlayerShot shot = new PlayerShot();
         shot.setTranslateX(getTranslateX() + getBoundsInLocal().getWidth()*0.5 - shot.getBoundsInLocal().getWidth()*0.5);
         shot.setTranslateY(getTranslateY() - 20);
         shots.add(shot);

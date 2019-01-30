@@ -15,7 +15,7 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import main.Main;
 
-public class Enemy extends Sprite {
+public class Enemy extends Shooter {
 
     Polygon leftEar,rightEar;
 
@@ -110,4 +110,11 @@ public class Enemy extends Sprite {
         return Main.Z_LEVEL_3;
     }
 
+    @Override
+    public void makeShot() {
+        EnemyShot shot = new EnemyShot();
+        shot.setTranslateX(getTranslateX() + getBoundsInLocal().getWidth()*0.5 - shot.getBoundsInLocal().getWidth()*0.5);
+        shot.setTranslateY(getTranslateY() + getBoundsInLocal().getHeight());
+        shots.add(shot);
+    }
 }
