@@ -13,7 +13,7 @@ public class Geometry {
     }
 
     /**
-     * This method checks just x and y coordinates, without z
+     * This method checks if inner is inside outer, considering just X and Y axes
      */
     public static boolean containsXY(Bounds outer, Bounds inner){
 

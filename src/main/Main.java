@@ -12,7 +12,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -52,11 +51,11 @@ public class Main extends Application {
     
     private Background background;
     private Player player;
-    private List<Enemy> enemies;
+    private List<Enemy> enemies = new LinkedList<>();
     private List<Shot> playerShots;
-    private List<Shot> enemyShots;
-    private List<Star> stars;
-    private List<Coin> coins;
+    private List<Shot> enemyShots = new LinkedList<>();;
+    private List<Star> stars = new LinkedList<>();
+    private List<Coin> coins = new LinkedList<>();
     
     private Camera camera;
     
@@ -69,21 +68,12 @@ public class Main extends Application {
 
     private double enemyVelocity = ENEMY_VELOCITY;
 
-    private RandomTrigger enemyChangeDirectionTrigger;
-    private RandomTrigger enemyShootingTrigger;
+    private RandomTrigger enemyChangeDirectionTrigger = new RandomTrigger(ENEMY_CHANGE_DIRECTION_PERIOD_LOWER_BOUND, ENEMY_CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
+    private RandomTrigger enemyShootingTrigger = new RandomTrigger(ENEMY_SHOOTING_PERIOD_LOWER_BOUND, ENEMY_SHOOTING_PERIOD_UPPER_BOUND);;
 
     @Override
     public void start(Stage primaryStage) {
-        enemyShots = new LinkedList<>();
-        enemyChangeDirectionTrigger = new RandomTrigger(ENEMY_CHANGE_DIRECTION_PERIOD_LOWER_BOUND, ENEMY_CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
-        enemyShootingTrigger = new RandomTrigger(ENEMY_SHOOTING_PERIOD_LOWER_BOUND, ENEMY_SHOOTING_PERIOD_UPPER_BOUND);
-
-        enemies = new LinkedList<>();
-        stars = new LinkedList<>();
-        coins = new LinkedList<>();
         root = new Group();
-
-        
         background = new Background(WINDOW_WIDTH, WINDOW_HEIGHT);
         root.getChildren().add(background);
         
