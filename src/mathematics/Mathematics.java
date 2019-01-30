@@ -12,4 +12,8 @@ public class Mathematics {
     public static int getRandom(int lower, int upper){
         return (int)(Math.random() * (upper - lower) + lower);
     }
+
+    public static boolean getTrueOrFalse(){
+        return Math.random() < 0.5;
+    }
 }

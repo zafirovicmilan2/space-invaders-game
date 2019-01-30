@@ -7,13 +7,14 @@ import mathematics.Mathematics;
 
 public class Coin extends Sprite {
 
-    public static double VELOCITY = 5;
+    private static double VELOCITY = 5;
+    private static double ANGLE_OPTION_1 = 15;
+    private static double ANGLE_OPTION_2 = -15;
 
     private int value;
-    private int angle;
+    private double angle;
 
-    public Coin(int value, int angle) {
-        // TODO add possibility for different sizes
+    public Coin(int value, double angle) {
         this.value = value;
         this.angle = angle;
         Circle c1 = new Circle(15.0, Color.GOLD);
@@ -22,12 +23,8 @@ public class Coin extends Sprite {
         getChildren().addAll(c1, c2, c3);
     }
 
-    public Coin() {
-        this(Mathematics.getRandom(1,10));
-    }
-
     public Coin(int value) {
-        this(value, Math.random()<0.5 ? 15 : -15);
+        this(value, Mathematics.getTrueOrFalse() ? ANGLE_OPTION_1 : ANGLE_OPTION_2);
     }
 
     public int getValue() {
