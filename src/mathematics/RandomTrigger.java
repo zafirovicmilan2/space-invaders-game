@@ -1,30 +1,21 @@
 package mathematics;
 
-import sprites.Updatable;
-
-public class RandomTrigger implements Updatable {
+/**
+ * Triggers on a random period between minTimerPeriod and maxTimerPeriod
+ */
+public class RandomTrigger extends Trigger {
 
     private int minTimerPeriod;
     private int maxTimerPeriod;
-    private int timerPeriod;
-    private boolean trigger = false;
 
     public RandomTrigger(int minTimerPeriod, int maxTimerPeriod) {
+        super(Mathematics.getRandom(minTimerPeriod, maxTimerPeriod));
         this.minTimerPeriod = minTimerPeriod;
         this.maxTimerPeriod = maxTimerPeriod;
-        timerPeriod = Mathematics.getRandom(minTimerPeriod, maxTimerPeriod);
-    }
-
-    public boolean isTriggered(){
-        return trigger;
     }
 
     @Override
-    public void update() {
-        trigger = false;
-        if (--timerPeriod == 0){
-            timerPeriod = Mathematics.getRandom(minTimerPeriod, maxTimerPeriod);
-            trigger = true;
-        }
+    protected int getNewTimePeriod(){
+        return Mathematics.getRandom(minTimerPeriod, maxTimerPeriod);
     }
 }
