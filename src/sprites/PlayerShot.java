@@ -7,6 +7,7 @@ import main.Main;
 public class PlayerShot extends Shot {
 
     private static final double SHOT_VELOCITY = -5;
+    private static final double SHOT_ROTATION_ANGLE = 10;
 
     public PlayerShot() {
         Polygon body = new Polygon();
@@ -25,7 +26,7 @@ public class PlayerShot extends Shot {
     @Override
     public void update() {
         setTranslateY(getTranslateY() + SHOT_VELOCITY);
-        setRotate(getRotate() + 10);
+        setRotate(getRotate() + SHOT_ROTATION_ANGLE);
     }
 
     @Override
