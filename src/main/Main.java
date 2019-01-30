@@ -207,30 +207,12 @@ public class Main extends Application {
             }
             
             camera.getChildren().clear();
-            if (!playerKilled)
-                camera.getChildren().add(player);
-            camera.getChildren().addAll(stars);
-            stars.forEach(e -> e.update());
-            camera.getChildren().addAll(coins);
-            coins.forEach(e -> e.update());
 
-            player.setShots(playerShots);
-            player.update();
-            camera.update();
-            positioner.update();
-            enemyChangeDirectionTrigger.update();
-            enemyShootingTrigger.update();
+            updateAndMoveBackToCamera();
 
             if (enemies.isEmpty() || playerKilled) {
                 theEnd = true;
                 camera.getChildren().add(getFinalResult());
-            } else {    
-                camera.getChildren().addAll(playerShots);
-                playerShots.forEach(e -> e.update());
-                camera.getChildren().addAll(enemies);
-                enemies.forEach(e -> e.update());
-                camera.getChildren().addAll(enemyShots);
-                enemyShots.forEach(e -> e.update());
             }
         }
     }
@@ -273,6 +255,28 @@ public class Main extends Application {
             stars.add(star);
         }
         return stars;
+    }
+
+    private void updateAndMoveBackToCamera(){
+        stars.forEach(e -> e.update());
+        coins.forEach(e -> e.update());
+        enemyShots.forEach(e -> e.update());
+        playerShots.forEach(e -> e.update());
+        enemies.forEach(e -> e.update());
+        player.update();
+        camera.update();
+        positioner.update();
+        enemyChangeDirectionTrigger.update();
+        enemyShootingTrigger.update();
+
+        if (!playerKilled)
+            camera.getChildren().add(player);
+        camera.getChildren().addAll(stars);
+        camera.getChildren().addAll(coins);
+        player.setShots(playerShots);
+        camera.getChildren().addAll(playerShots);
+        camera.getChildren().addAll(enemies);
+        camera.getChildren().addAll(enemyShots);
     }
     
 }
