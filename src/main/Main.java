@@ -11,6 +11,10 @@ import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sprites.*;
 
@@ -27,7 +31,9 @@ public class Main extends Application {
     public static final int Z_LEVEL_1 = -1; // used for background
     public static final int Z_LEVEL_2 = -2; // used for stars
     public static final int Z_LEVEL_3 = -3; // used for player, shot, enemy, enemy-shot, coin
-    public static final int Z_LEVEL_4 = -4; // used for time and result
+    public static final int Z_LEVEL_4 = -4; // used for time, result and final result
+
+    public static final double FINAL_RESULT_FONT = 100;
 
     public enum EnemyStates {LIVE, SHOT, DEAD};
     
@@ -154,6 +160,7 @@ public class Main extends Application {
 
             if (enemies.isEmpty()) {
                 theEnd = true;
+                camera.getChildren().add(getFinalResult());
             } else {    
                 camera.getChildren().addAll(playerShots);
                 playerShots.forEach(e -> e.update());
@@ -173,6 +180,25 @@ public class Main extends Application {
     
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private Group getFinalResult(){
+        Group res = new Group();
+        Text finalResult = new Text();
+        finalResult.setText(result.getText());
+        finalResult.setFont(new Font(FINAL_RESULT_FONT));
+        finalResult.setStroke(Color.RED);
+        finalResult.setFill(Color.YELLOWGREEN);
+        finalResult.setTranslateZ(Z_LEVEL_4);
+        if(camera.isPlayerCameraON()){
+            finalResult.setTranslateX(player.getTranslateX() - WINDOW_WIDTH * 0.2);
+            finalResult.setTranslateY(player.getTranslateY() - Main.WINDOW_HEIGHT * 0.4);
+        }else{
+            finalResult.setTranslateX(WINDOW_WIDTH * 0.3);
+            finalResult.setTranslateY(WINDOW_HEIGHT * 0.5);
+        }
+        res.getChildren().add(finalResult);
+        return res;
     }
     
 }

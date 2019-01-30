@@ -38,4 +38,8 @@ public class Result extends Sprite {
     public void addPoints(int points){
         result += points;
     }
+
+    public String getText(){
+        return resultLabel.getText();
+    }
 }
