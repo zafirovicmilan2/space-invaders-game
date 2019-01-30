@@ -9,8 +9,6 @@ import main.Main;
 
 public class Background extends Sprite {
 
-    private Player player = null;
-    
     public Background(int width, int height) {
 
         Rectangle background = new Rectangle(0, 0, width + 10, height + 10);
@@ -21,21 +19,8 @@ public class Background extends Sprite {
         getChildren().addAll(background);
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     @Override
     public void update() {
-        if (player.getCamera().isPlayerCameraON()) {
-            setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH * 0.5);
-            setTranslateY(player.getTranslateY() - Main.WINDOW_HEIGHT * 0.9);
-        }
-        else{
-            setTranslateX(0);
-            setTranslateY(0);
-        }
-
     }
 
     @Override

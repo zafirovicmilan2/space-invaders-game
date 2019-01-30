@@ -71,6 +71,8 @@ public class Main extends Application {
     private RandomTrigger enemyChangeDirectionTrigger = new RandomTrigger(ENEMY_CHANGE_DIRECTION_PERIOD_LOWER_BOUND, ENEMY_CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
     private RandomTrigger enemyShootingTrigger = new RandomTrigger(ENEMY_SHOOTING_PERIOD_LOWER_BOUND, ENEMY_SHOOTING_PERIOD_UPPER_BOUND);;
 
+    private Positioner positioner;
+
     @Override
     public void start(Stage primaryStage) {
         root = new Group();
@@ -81,8 +83,9 @@ public class Main extends Application {
         player.setTranslateX(WINDOW_WIDTH * 0.5);
         player.setTranslateY(WINDOW_HEIGHT * 0.9);
 
+        positioner = new Positioner(player);
+
         camera = new Camera(player);
-        background.setPlayer(player);
         player.setCamera(camera);
         camera.getChildren().add(player);
         
@@ -103,9 +106,11 @@ public class Main extends Application {
         }
         
         root.getChildren().add(camera);
-        time = new Time(player);
-        result = new Result(player);
+        time = new Time();
+        result = new Result();
         root.getChildren().addAll(time, result);
+
+        configurePositioner();
 
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, true);
         camera.setScene(scene);
@@ -224,9 +229,7 @@ public class Main extends Application {
             player.setShots(playerShots);
             player.update();
             camera.update();
-            background.update();
-            time.update();
-            result.update();
+            positioner.update();
             enemyChangeDirectionTrigger.update();
             enemyShootingTrigger.update();
 
@@ -265,6 +268,12 @@ public class Main extends Application {
         }
         res.getChildren().add(finalResult);
         return res;
+    }
+
+    private void configurePositioner(){
+        positioner.addSprite(time, 0,-WINDOW_HEIGHT*0.8,WINDOW_WIDTH*0.5, WINDOW_HEIGHT*0.1);
+        positioner.addSprite(result, WINDOW_WIDTH*0.3,-WINDOW_HEIGHT*0.8,WINDOW_WIDTH*0.8, WINDOW_HEIGHT*0.1);
+        positioner.addSprite(background, -WINDOW_WIDTH*0.5,-WINDOW_HEIGHT*0.9,0, 0);
     }
     
 }

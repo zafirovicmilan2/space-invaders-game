@@ -9,7 +9,7 @@ public class Positioner implements Updatable {
 
     private Player player;
     private List<Sprite> sprites = new LinkedList<>();
-    private List<Point2D> positionsCameraON = new LinkedList<>();
+    private List<Point2D> positionsCameraON = new LinkedList<>(); // distance from player
     private List<Point2D> positionsCameraOFF = new LinkedList<>();
 
     public Positioner(Player player) {
@@ -26,18 +26,21 @@ public class Positioner implements Updatable {
         positionsCameraOFF.add(positionCameraOFF);
     }
 
+    public void position(Sprite s, Point2D positionCameraON, Point2D positionCameraOFF){
+        if(player.getCamera().isPlayerCameraON()){
+            s.setTranslateX(player.getTranslateX() + positionCameraON.getX());
+            s.setTranslateY(player.getTranslateY() + positionCameraON.getY());
+        }else{
+            s.setTranslateX(positionCameraOFF.getX());
+            s.setTranslateY(positionCameraOFF.getY());
+        }
+    }
+
     @Override
     public void update() {
         for (int i = 0; i < sprites.size(); i++) {
-            Sprite currentSprite = sprites.get(i);
-            if(player.getCamera().isPlayerCameraON()){
-                currentSprite.setTranslateX(player.getTranslateX() + positionsCameraON.get(i).getX());
-                currentSprite.setTranslateY(player.getTranslateX() + positionsCameraON.get(i).getY());
-            }else{
-                currentSprite.setTranslateX(positionsCameraOFF.get(i).getX());
-                currentSprite.setTranslateY(positionsCameraOFF.get(i).getY());
-            }
-            currentSprite.update();
+            position(sprites.get(i), positionsCameraON.get(i), positionsCameraOFF.get(i));
+            sprites.get(i).update();
         }
     }
 }
