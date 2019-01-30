@@ -5,8 +5,9 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import main.Main;
 import sprites.Player;
+import sprites.Updatable;
 
-public class Camera extends Group {
+public class Camera extends Group implements Updatable {
 
     private Player player;
     private PerspectiveCamera defaultCamera;
@@ -39,6 +40,7 @@ public class Camera extends Group {
         return playerCameraON;
     }
 
+    @Override
     public void update() {
         playerCamera.setTranslateX(player.getTranslateX() - Main.WINDOW_WIDTH * 0.5);
         playerCamera.setTranslateY(player.getTranslateY() - Main.WINDOW_HEIGHT * 0.9);
