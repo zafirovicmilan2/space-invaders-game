@@ -51,15 +51,14 @@ public class Main extends Application {
     
     private Background background;
     private Player player;
-    private List<Enemy> enemies = new LinkedList<>();
+    private List<Enemy> enemies;
     private List<Shot> playerShots;
     private List<Shot> enemyShots = new LinkedList<>();
-    private List<Star> stars = new LinkedList<>();
+    private List<Star> stars;
     private List<Coin> coins = new LinkedList<>();
     
     private Camera camera;
-    
-    private Group root;
+
     private boolean theEnd = false;
     private boolean playerKilled = false;
 
@@ -75,42 +74,31 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        root = new Group();
+        Group root = new Group();
+
         background = new Background(WINDOW_WIDTH, WINDOW_HEIGHT);
-        root.getChildren().add(background);
+        time = new Time();
+        result = new Result();
+        root.getChildren().addAll(background, time, result);
         
         player = new Player();
         player.setTranslateX(WINDOW_WIDTH * 0.5);
         player.setTranslateY(WINDOW_HEIGHT * 0.9);
 
-        positioner = new Positioner(player);
-
         camera = new Camera(player);
         player.setCamera(camera);
-        camera.getChildren().add(player);
-        
-        for (int i = 0; i < ENEMIES_IN_A_COLUMN; i++) 
-            for (int j = 0; j < ENEMIES_IN_A_ROW; j++) {
-                Enemy enemy = new Enemy((i+j)%2 == 0);
-                enemy.setTranslateX((j+1) * WINDOW_WIDTH / (ENEMIES_IN_A_ROW + 1));
-                enemy.setTranslateY((i+1) * 100);
-                camera.getChildren().add(enemy);
-                enemies.add(enemy);
-            }
 
-        for (int i = 0; i < SIMULTANEOUS_STARS_NUM; i++) {
-            Point2D randomPosition = Geometry.getRandomPoint(background.getBoundsInParent());
-            Star star = new Star(randomPosition.getX(), randomPosition.getY());
-            camera.getChildren().add(star);
-            stars.add(star);
-        }
-        
-        root.getChildren().add(camera);
-        time = new Time();
-        result = new Result();
-        root.getChildren().addAll(time, result);
-
+        positioner = new Positioner(player);
         configurePositioner();
+
+        enemies = createEnemies();
+        stars = createStars();
+
+        camera.getChildren().addAll(enemies);
+        camera.getChildren().addAll(stars);
+        camera.getChildren().add(player);
+
+        root.getChildren().add(camera);
 
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, true);
         camera.setScene(scene);
@@ -274,6 +262,28 @@ public class Main extends Application {
         positioner.addSprite(time, 0,-WINDOW_HEIGHT*0.8,WINDOW_WIDTH*0.5, WINDOW_HEIGHT*0.1);
         positioner.addSprite(result, WINDOW_WIDTH*0.3,-WINDOW_HEIGHT*0.8,WINDOW_WIDTH*0.8, WINDOW_HEIGHT*0.1);
         positioner.addSprite(background, -WINDOW_WIDTH*0.5,-WINDOW_HEIGHT*0.9,0, 0);
+    }
+
+    private List<Enemy> createEnemies(){
+        List<Enemy> enemies = new LinkedList<>();
+        for (int i = 0; i < ENEMIES_IN_A_COLUMN; i++)
+            for (int j = 0; j < ENEMIES_IN_A_ROW; j++) {
+                Enemy enemy = new Enemy((i+j)%2 == 0);
+                enemy.setTranslateX((j+1) * WINDOW_WIDTH / (ENEMIES_IN_A_ROW + 1));
+                enemy.setTranslateY((i+1) * 100);
+                enemies.add(enemy);
+            }
+        return enemies;
+    }
+
+    private List<Star> createStars(){
+        List<Star> stars = new LinkedList<>();
+        for (int i = 0; i < SIMULTANEOUS_STARS_NUM; i++) {
+            Point2D randomPosition = Geometry.getRandomPoint(background.getBoundsInParent());
+            Star star = new Star(randomPosition.getX(), randomPosition.getY());
+            stars.add(star);
+        }
+        return stars;
     }
     
 }
