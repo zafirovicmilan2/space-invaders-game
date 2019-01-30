@@ -62,6 +62,7 @@ public class Main extends Application {
     
     private Group root;
     private boolean theEnd = false;
+    private boolean playerKilled = false;
 
     private Time time;
     private Result result;
@@ -171,6 +172,8 @@ public class Main extends Application {
                     camera.getChildren().add(coin);
                     coins.add(coin);
                 }else {
+                    if (currentEnemy.getBoundsInParent().intersects(player.getBoundsInParent()))
+                        playerKilled = true;
                     currentEnemy.setTranslateX(currentEnemy.getTranslateX() + enemyVelocity);
                 }
             }
@@ -186,6 +189,14 @@ public class Main extends Application {
                         enemyShots.add(enemyShot);
                     }
                 }
+            }
+
+            for (int i = 0; i < enemyShots.size(); i++) {
+                Shot currentEnemyShot = enemyShots.get(i);
+                if (currentEnemyShot.getBoundsInParent().intersects(player.getBoundsInParent())){
+                    playerKilled = true;
+                }
+                // TODO remove enemy shots that are far away from player
             }
 
 
@@ -213,7 +224,8 @@ public class Main extends Application {
             }
             
             camera.getChildren().clear();
-            camera.getChildren().add(player);
+            if (!playerKilled)
+                camera.getChildren().add(player);
             camera.getChildren().addAll(stars);
             stars.forEach(e -> e.update());
             camera.getChildren().addAll(coins);
@@ -228,7 +240,7 @@ public class Main extends Application {
             enemyChangeDirectionTrigger.update();
             enemyShootingTrigger.update();
 
-            if (enemies.isEmpty()) {
+            if (enemies.isEmpty() || playerKilled) {
                 theEnd = true;
                 camera.getChildren().add(getFinalResult());
             } else {    
