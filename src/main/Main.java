@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import mathematics.RandomTrigger;
 import sprites.*;
 
 public class Main extends Application {
@@ -25,6 +26,11 @@ public class Main extends Application {
     
     public static final int ENEMIES_IN_A_ROW = 6;
     public static final int ENEMIES_IN_A_COLUMN = 3;
+
+    public static final double ENEMY_VELOCITY = 5;
+
+    public static final int ENEMY_CHANGE_DIRECTION_PERIOD_LOWER_BOUND = 10;
+    public static final int ENEMY_CHANGE_DIRECTION_PERIOD_UPPER_BOUND = 70;
 
     public static final int SIMULTANEOUS_STARS_NUM = 3;
 
@@ -55,8 +61,14 @@ public class Main extends Application {
     private Time time;
     private Result result;
 
+    private double enemyVelocity = ENEMY_VELOCITY;
+
+    RandomTrigger enemyChangeDirectionTrigger;
+
     @Override
     public void start(Stage primaryStage) {
+        enemyChangeDirectionTrigger = new RandomTrigger(ENEMY_CHANGE_DIRECTION_PERIOD_LOWER_BOUND, ENEMY_CHANGE_DIRECTION_PERIOD_UPPER_BOUND);
+
         enemies = new LinkedList<>();
         stars = new LinkedList<>();
         coins = new LinkedList<>();
@@ -116,6 +128,9 @@ public class Main extends Application {
 
     public void update() {
         if (theEnd == false) {
+            if(enemyChangeDirectionTrigger.isTriggered())
+                enemyVelocity = -enemyVelocity;
+
             playerShots = player.getShots();
             
             for (int i = 0; i < playerShots.size(); i++) {
@@ -147,6 +162,8 @@ public class Main extends Application {
                     coin.setTranslateY(currentEnemy.getBoundsInParent().getMaxY() - currentEnemy.getBoundsInLocal().getHeight() * 0.5);
                     camera.getChildren().add(coin);
                     coins.add(coin);
+                }else {
+                    currentEnemy.setTranslateX(currentEnemy.getTranslateX() + enemyVelocity);
                 }
             }
 
@@ -185,6 +202,7 @@ public class Main extends Application {
             background.update();
             time.update();
             result.update();
+            enemyChangeDirectionTrigger.update();
 
             if (enemies.isEmpty()) {
                 theEnd = true;
