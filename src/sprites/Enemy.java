@@ -17,7 +17,13 @@ import main.Main;
 
 public class Enemy extends Shooter {
 
-    Polygon leftEar,rightEar;
+    public static int ROTATION_BEFORE_DEATH_PERIOD = 30;
+    public static int ROTATION_BEFORE_DEATH_ANGLE = 2;
+
+    private Polygon leftEar,rightEar;
+    private Main.EnemyStates state = Main.EnemyStates.LIVE;
+    private int rotationBeforeDeathTimer = ROTATION_BEFORE_DEATH_PERIOD;
+
 
     public Enemy(boolean leftOrRight) {
         Rectangle body = new Rectangle(0, 0, 50, 40);
@@ -102,7 +108,11 @@ public class Enemy extends Shooter {
 
     @Override
     public void update() {
-
+        if(state == Main.EnemyStates.SHOT){
+            setRotate(getRotate() + ROTATION_BEFORE_DEATH_ANGLE);
+            if(--rotationBeforeDeathTimer == 0)
+                state = Main.EnemyStates.DEAD;
+        }
     }
 
     @Override
@@ -116,5 +126,13 @@ public class Enemy extends Shooter {
         shot.setTranslateX(getTranslateX() + getBoundsInLocal().getWidth()*0.5 - shot.getBoundsInLocal().getWidth()*0.5);
         shot.setTranslateY(getTranslateY() + getBoundsInLocal().getHeight());
         shots.add(shot);
+    }
+
+    public Main.EnemyStates getState() {
+        return state;
+    }
+
+    public void setState(Main.EnemyStates state) {
+        this.state = state;
     }
 }

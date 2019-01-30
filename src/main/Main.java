@@ -28,6 +28,8 @@ public class Main extends Application {
     public static final int Z_LEVEL_2 = -2; // used for stars
     public static final int Z_LEVEL_3 = -3; // used for player, shot, enemy, enemy-shot, coin
     public static final int Z_LEVEL_4 = -4; // used for time and result
+
+    public enum EnemyStates {LIVE, SHOT, DEAD};
     
     private Background background;
     private Player player;
@@ -115,10 +117,17 @@ public class Main extends Application {
                     Enemy currentEnemy = enemies.get(j);
                     if (currentPlayerShot.getBoundsInParent().intersects(currentEnemy.getBoundsInParent())) {
                         playerShots.remove(currentPlayerShot);
-                        enemies.remove(currentEnemy);
+                        if (currentEnemy.getState() == EnemyStates.LIVE)
+                            currentEnemy.setState(EnemyStates.SHOT);
                         break;
                     }
                 }
+            }
+
+            for (int i = 0; i < enemies.size(); i++) {
+                Enemy currentEnemy = enemies.get(i);
+                if (currentEnemy.getState() == EnemyStates.DEAD)
+                    enemies.remove(currentEnemy);
             }
 
             int currentStarsNum = 0;
@@ -146,6 +155,7 @@ public class Main extends Application {
                 camera.getChildren().addAll(playerShots);
                 playerShots.forEach(e -> e.update());
                 camera.getChildren().addAll(enemies);
+                enemies.forEach(e -> e.update());
             }
             
             player.setShots(playerShots);
