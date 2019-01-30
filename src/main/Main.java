@@ -179,6 +179,13 @@ public class Main extends Application {
             camera.getChildren().addAll(coins);
             coins.forEach(e -> e.update());
 
+            player.setShots(playerShots);
+            player.update();
+            camera.update();
+            background.update();
+            time.update();
+            result.update();
+
             if (enemies.isEmpty()) {
                 theEnd = true;
                 camera.getChildren().add(getFinalResult());
@@ -188,14 +195,6 @@ public class Main extends Application {
                 camera.getChildren().addAll(enemies);
                 enemies.forEach(e -> e.update());
             }
-            
-            player.setShots(playerShots);
-            player.update();
-            camera.update();
-            background.update();
-            time.update();
-            result.update();
-
         }
     }
     
