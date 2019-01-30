@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import main.Main;
 import mathematics.Mathematics;
+import mathematics.Trigger;
 
 public class Star extends Sprite {
 
@@ -17,10 +18,9 @@ public class Star extends Sprite {
     private double horizontalVelocity = Mathematics.getRandom(-Star.VELOCITY, Star.VELOCITY);
     private double verticalVelocity = Mathematics.getRandom(-Star.VELOCITY, Star.VELOCITY);
     private double rotationAngle = Mathematics.getRandom(-Star.ROTATION_ANGLE, Star.ROTATION_ANGLE);
-    private int directionTimer = CHANGE_DIRECTION_PERIOD;
+    private Trigger trigger = new Trigger(CHANGE_DIRECTION_PERIOD);
 
     public Star(double x, double y) {
-        // TODO possibility for different sizes
         Polygon body = new Polygon();
         body.getPoints().addAll(new Double[]{
                 0.0, -50.0,
@@ -43,11 +43,11 @@ public class Star extends Sprite {
 
     @Override
     public void update() {
+        trigger.update();
         setRotate(getRotate() + rotationAngle);
         setTranslateX(getTranslateX() + horizontalVelocity);
         setTranslateY(getTranslateY() + verticalVelocity);
-        if(--directionTimer == 0){
-            directionTimer = CHANGE_DIRECTION_PERIOD;
+        if(trigger.isTriggered()){
             horizontalVelocity = Mathematics.getRandom(-Star.VELOCITY, Star.VELOCITY);
             verticalVelocity = Mathematics.getRandom(-Star.VELOCITY, Star.VELOCITY);
             rotationAngle = Mathematics.getRandom(-Star.ROTATION_ANGLE, Star.ROTATION_ANGLE);
