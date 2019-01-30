@@ -36,6 +36,7 @@ public class Main extends Application {
     public static final double FINAL_RESULT_FONT = 100;
 
     public static final int POINTS_COIN = 5;
+    public static final int POINTS_ENEMY_KILLED = 10;
 
     public enum EnemyStates {LIVE, SHOT, DEAD};
     
@@ -120,7 +121,7 @@ public class Main extends Application {
             for (int i = 0; i < playerShots.size(); i++) {
                 Shot currentPlayerShot = playerShots.get(i);
                 
-                if (currentPlayerShot.getTranslateY() < 50) {
+                if (currentPlayerShot.getTranslateY() < 50) { // TODO update this one
                     playerShots.remove(currentPlayerShot);
                     continue;
                 }
@@ -140,6 +141,7 @@ public class Main extends Application {
                 Enemy currentEnemy = enemies.get(i);
                 if (currentEnemy.getState() == EnemyStates.DEAD) {
                     enemies.remove(currentEnemy);
+                    result.addPoints(POINTS_ENEMY_KILLED);
                     Coin coin = new Coin(POINTS_COIN);
                     coin.setTranslateX(currentEnemy.getBoundsInParent().getMinX() + currentEnemy.getBoundsInLocal().getWidth() * 0.5);
                     coin.setTranslateY(currentEnemy.getBoundsInParent().getMaxY() - currentEnemy.getBoundsInLocal().getHeight() * 0.5);
