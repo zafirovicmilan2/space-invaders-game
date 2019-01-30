@@ -240,22 +240,11 @@ public class Main extends Application {
     }
 
     private Group getFinalResult(){
-        Group res = new Group();
-        Text finalResult = new Text();
-        finalResult.setText(result.getText());
-        finalResult.setFont(new Font(FINAL_RESULT_FONT));
-        finalResult.setStroke(Color.RED);
-        finalResult.setFill(Color.YELLOWGREEN);
-        finalResult.setTranslateZ(Z_LEVEL_4);
-        if(camera.isPlayerCameraON()){
-            finalResult.setTranslateX(player.getTranslateX() - WINDOW_WIDTH * 0.2);
-            finalResult.setTranslateY(player.getTranslateY() - Main.WINDOW_HEIGHT * 0.4);
-        }else{
-            finalResult.setTranslateX(WINDOW_WIDTH * 0.3);
-            finalResult.setTranslateY(WINDOW_HEIGHT * 0.5);
-        }
-        res.getChildren().add(finalResult);
-        return res;
+        Result finalResult = new Result(Color.YELLOWGREEN, Color.RED, new Font(FINAL_RESULT_FONT));
+        finalResult.addPoints(result.getResult());
+        finalResult.update();
+        positioner.position(finalResult, -WINDOW_WIDTH*0.2,-Main.WINDOW_HEIGHT*0.4, WINDOW_WIDTH*0.3, WINDOW_HEIGHT * 0.5);
+        return finalResult;
     }
 
     private void configurePositioner(){

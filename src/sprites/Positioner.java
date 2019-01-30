@@ -36,6 +36,10 @@ public class Positioner implements Updatable {
         }
     }
 
+    public void position(Sprite s, double xCameraON, double yCameraON, double xCameraOFF, double yCameraOFF){
+        position(s, new Point2D(xCameraON, yCameraON), new Point2D(xCameraOFF, yCameraOFF));
+    }
+
     @Override
     public void update() {
         for (int i = 0; i < sprites.size(); i++) {
