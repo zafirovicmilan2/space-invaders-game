@@ -128,6 +128,7 @@ public class Main extends Application {
                 Enemy currentEnemy = enemies.get(i);
                 if (currentEnemy.getState() == EnemyStates.DEAD)
                     enemies.remove(currentEnemy);
+                // TODO create a coin
             }
 
             int currentStarsNum = 0;

@@ -109,7 +109,7 @@ public class Enemy extends Shooter {
     @Override
     public void update() {
         if(state == Main.EnemyStates.SHOT){
-            setRotate(getRotate() + ROTATION_BEFORE_DEATH_ANGLE);
+            setRotate(getRotate() + ROTATION_BEFORE_DEATH_ANGLE); // TODO improve this rotation i.e. random angle, pivot,..
             if(--rotationBeforeDeathTimer == 0)
                 state = Main.EnemyStates.DEAD;
         }
