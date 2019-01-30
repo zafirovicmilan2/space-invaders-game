@@ -53,7 +53,7 @@ public class Main extends Application {
     private Player player;
     private List<Enemy> enemies = new LinkedList<>();
     private List<Shot> playerShots;
-    private List<Shot> enemyShots = new LinkedList<>();;
+    private List<Shot> enemyShots = new LinkedList<>();
     private List<Star> stars = new LinkedList<>();
     private List<Coin> coins = new LinkedList<>();
     
