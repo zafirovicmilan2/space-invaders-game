@@ -2,6 +2,7 @@ package main;
 
 import cameras.Camera;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -161,17 +162,17 @@ public class Main extends Application {
                 }
             }
 
+            //enemy shooting
             if (enemyShootingTrigger.isTriggered()) {
-                boolean shot_fired = false;
-                while(!shot_fired){
-                    int index = Mathematics.getRandom(0, enemies.size());
-                    if (enemies.get(index).getState() == EnemyStates.LIVE){
-                        shot_fired = true;
-                        Shot enemyShot = enemies.get(index).makeShot();
-                        camera.getChildren().add(enemyShot);
-                        enemyShots.add(enemyShot);
-                    }
+                List<Enemy> liveEnemies = new ArrayList<>();
+                for (int i = 0; i < enemies.size(); i++) {
+                    if (enemies.get(i).getState() == EnemyStates.LIVE)
+                        liveEnemies.add(enemies.get(i));
                 }
+                int index = Mathematics.getRandom(0, liveEnemies.size());
+                Shot enemyShot = enemies.get(index).makeShot();
+                camera.getChildren().add(enemyShot);
+                enemyShots.add(enemyShot);
             }
 
             for (int i = 0; i < enemyShots.size(); i++) {
