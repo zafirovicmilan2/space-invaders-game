@@ -53,6 +53,7 @@ public class Main extends Application {
     private Background background;
     private Player player;
     private List<Enemy> enemies;
+    private List<Enemy> liveEnemies;
     private List<Shot> playerShots;
     private List<Shot> enemyShots = new LinkedList<>();
     private List<Star> stars;
@@ -138,8 +139,11 @@ public class Main extends Application {
                     Enemy currentEnemy = enemies.get(j);
                     if (currentPlayerShot.getBoundsInParent().intersects(currentEnemy.getBoundsInParent())) {
                         playerShots.remove(currentPlayerShot);
-                        if (currentEnemy.getState() == EnemyStates.LIVE)
+                        if (currentEnemy.getState() == EnemyStates.LIVE){
                             currentEnemy.setState(EnemyStates.SHOT);
+                            liveEnemies.remove(currentEnemy);
+                        }
+
                         break;
                     }
                 }
@@ -164,11 +168,6 @@ public class Main extends Application {
 
             //enemy shooting
             if (enemyShootingTrigger.isTriggered()) {
-                List<Enemy> liveEnemies = new ArrayList<>();
-                for (int i = 0; i < enemies.size(); i++) {
-                    if (enemies.get(i).getState() == EnemyStates.LIVE)
-                        liveEnemies.add(enemies.get(i));
-                }
                 int index = Mathematics.getRandom(0, liveEnemies.size());
                 Shot enemyShot = enemies.get(index).makeShot();
                 camera.getChildren().add(enemyShot);
@@ -237,6 +236,7 @@ public class Main extends Application {
     }
 
     private List<Enemy> createEnemies(){
+        liveEnemies = new LinkedList<>();
         List<Enemy> enemies = new LinkedList<>();
         for (int i = 0; i < ENEMIES_IN_A_COLUMN; i++)
             for (int j = 0; j < ENEMIES_IN_A_ROW; j++) {
@@ -244,6 +244,7 @@ public class Main extends Application {
                 enemy.setTranslateX((j+1) * WINDOW_WIDTH / (ENEMIES_IN_A_ROW + 1));
                 enemy.setTranslateY((i+1) * 100);
                 enemies.add(enemy);
+                liveEnemies.add(enemy);
             }
         return enemies;
     }
