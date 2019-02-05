@@ -130,10 +130,7 @@ public class Main extends Application {
             for (int i = 0; i < playerShots.size(); i++) {
                 Shot currentPlayerShot = playerShots.get(i);
                 
-                if (currentPlayerShot.getTranslateY() < 50) { // TODO update this one
-                    playerShots.remove(currentPlayerShot);
-                    continue;
-                }
+                // TODO remove player that is far away from player
                 
                 for (int j = 0; j < enemies.size(); j++) {
                     Enemy currentEnemy = enemies.get(j);
